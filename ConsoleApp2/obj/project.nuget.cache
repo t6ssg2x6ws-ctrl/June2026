@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3Lj6cPivMFM=",
+  "dgSpecHash": "yBNkjNyRXzY=",
   "success": true,
-  "projectFilePath": "/Users/taki/C#june2026/ConsoleApp2/ConsoleApp2.csproj",
+  "projectFilePath": "/Users/taki/June2026/ConsoleApp2/ConsoleApp2.csproj",
   "expectedPackageFiles": [
     "/Users/taki/.nuget/packages/dapper/2.1.79/dapper.2.1.79.nupkg.sha512",
     "/Users/taki/.nuget/packages/microsoft.bcl.cryptography/9.0.13/microsoft.bcl.cryptography.9.0.13.nupkg.sha512",
