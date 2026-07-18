@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Uo9d9t8cFM0=",
+  "dgSpecHash": "NHvcoiuDaWs=",
   "success": true,
-  "projectFilePath": "/Users/taki/June2026/ConsoleApp1/ConsoleApp1.csproj",
+  "projectFilePath": "/Users/taki/C#june2026/ConsoleApp1/ConsoleApp1.csproj",
   "expectedPackageFiles": [
     "/Users/taki/.nuget/packages/microsoft.bcl.cryptography/9.0.13/microsoft.bcl.cryptography.9.0.13.nupkg.sha512",
     "/Users/taki/.nuget/packages/microsoft.data.sqlclient/7.0.2/microsoft.data.sqlclient.7.0.2.nupkg.sha512",
