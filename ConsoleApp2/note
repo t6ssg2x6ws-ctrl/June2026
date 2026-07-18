@@ -1,0 +1,3 @@
+Dynamic (dynamic): The compiler assumes whatever you are writing is valid.
+If you make a mistake or call a method that doesn't exist, the program will
+compile perfectly but will crash while running.

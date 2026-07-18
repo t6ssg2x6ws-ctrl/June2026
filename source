@@ -1,0 +1,58 @@
+// See https://aka.ms/new-console-template for more information
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlTypes;
+using Microsoft.Data.SqlClient;
+
+Console.WriteLine("Hello, World!");
+
+SqlConnectionStringBuilder sb = new SqlConnectionStringBuilder();
+sb.DataSource="localhost,1433";//local or sever name
+sb.InitialCatalog="SecC_db";//Database name
+sb.UserID="sa";
+sb.Password="sasa@123";
+sb.TrustServerCertificate=true;
+
+Console.WriteLine($"The Connection is {sb.ConnectionString}");
+
+SqlConnection connection = new SqlConnection(sb.ConnectionString);
+
+Console.WriteLine("The Connection is opening");
+connection.Open();
+Console.WriteLine("The Connection is opened");
+
+// SqlCommand cmd = new SqlCommand(@"select [STUDENT_ID],
+// [STUDENT_NAME],
+// [FATHER_NAME],
+// [ENROLL_DATE],
+// [city]
+// from data_UIT",connection);if u want more clear version build query
+string query = @"select [STUDENT_ID],
+[STUDENT_NAME],
+[FATHER_NAME],
+[ENROLL_DATE],
+[city]
+from data_UIT";
+
+SqlCommand cmd = new SqlCommand(query,connection);
+//to carry this command we need adapter 
+SqlDataAdapter adp = new SqlDataAdapter(cmd);
+//to execute data we need table 
+DataTable tb = new DataTable();
+//now we need to fill the data so 
+adp.Fill(tb);
+
+Console.WriteLine("The Connection is closing");
+connection.Close();
+Console.WriteLine("The Connection is closed");
+
+foreach(DataRow item in tb.Rows)
+{
+    Console.WriteLine(item["STUDENT_ID"]);
+    Console.WriteLine(item["STUDENT_NAME"]);
+    Console.WriteLine(item["FATHER_NAME"]);
+    DateTime dt= Convert.ToDateTime(  item["ENROLL_DATE"]);
+    Console.WriteLine(dt.ToString("dd-MMM-yyyy"));
+}
+
+Console.ReadLine();
