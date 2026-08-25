@@ -96,18 +96,19 @@ VALUES
             connection.Open();
 
             string query = @"UPDATE data_UIT
-SET [STUDENT_ID] = CASE [STUDENT_ID]
-    WHEN 'TNT-0001' THEN 'TNT-0201'
-    WHEN 'TNT-0002' THEN 'TNT-0202'
-    WHEN 'TNT-0003' THEN 'TNT-0203'
-    WHEN 'TNT-0004' THEN 'TNT-0204'
-    WHEN 'TNT-0005' THEN 'TNT-0205'
-    WHEN 'TNT-0006' THEN 'TNT-0206'
-    WHEN 'TNT-0007' THEN 'TNT-0207'
-END
-WHERE [STUDENT_ID] IN ('TNT-0001', 'TNT-0002', 'TNT-0003', 'TNT-0004', 'TNT-0005', 'TNT-0006', 'TNT-0007');
-";
+            SET    
+            STUDENT_ID = @STUDENT_ID,
+            STUDENT_NAME = @STUDENT_NAME,
+            FATHER_NAME = @FATHER_NAME,
+            ENROLL_DATE = @ENROLL_DATE,
+            city = @city
+            ;";
             SqlCommand cmd = new SqlCommand(query , connection);
+            cmd.Parameters.AddWithValue("@STUDENT_ID", "TNT-0201");
+            cmd.Parameters.AddWithValue("@STUDENT_NAME", "Aung Kyaw");
+            cmd.Parameters.AddWithValue("@FATHER_NAME", "U Ba");
+            cmd.Parameters.AddWithValue("@ENROLL_DATE", DateTime.Now);
+            cmd.Parameters.AddWithValue("@city", "Yangon");
             cmd.ExecuteNonQuery();
 
             connection.Close();
@@ -118,7 +119,7 @@ WHERE [STUDENT_ID] IN ('TNT-0001', 'TNT-0002', 'TNT-0003', 'TNT-0004', 'TNT-0005
             connection.Open();
 
             string query = @"DELETE FROM data_UIT 
-WHERE [STUDENT_ID] = 'TNT-3299';
+WHERE [STUDENT_ID] = 'TNT-0201';
 ";
             SqlCommand cmd = new SqlCommand(query , connection);
             cmd.ExecuteNonQuery();

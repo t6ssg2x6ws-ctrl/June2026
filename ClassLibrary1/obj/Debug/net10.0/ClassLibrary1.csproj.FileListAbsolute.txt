@@ -1,0 +1,15 @@
+/Users/taki/June2026/ClassLibrary1/bin/Debug/net10.0/ClassLibrary1.deps.json
+/Users/taki/June2026/ClassLibrary1/bin/Debug/net10.0/ClassLibrary1.runtimeconfig.json
+/Users/taki/June2026/ClassLibrary1/bin/Debug/net10.0/ClassLibrary1.dll
+/Users/taki/June2026/ClassLibrary1/bin/Debug/net10.0/ClassLibrary1.pdb
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ClassLibrary1.csproj.AssemblyReference.cache
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ClassLibrary1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ClassLibrary1.AssemblyInfoInputs.cache
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ClassLibrary1.AssemblyInfo.cs
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ClassLibrary1.csproj.CoreCompileInputs.cache
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ClassLibrary1.sourcelink.json
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ClassLibrary1.dll
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/refint/ClassLibrary1.dll
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ClassLibrary1.pdb
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ClassLibrary1.genruntimeconfig.cache
+/Users/taki/June2026/ClassLibrary1/obj/Debug/net10.0/ref/ClassLibrary1.dll

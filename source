@@ -1,58 +1,153 @@
-// See https://aka.ms/new-console-template for more information
-using System.Data;
-using System.Data.Common;
-using System.Data.SqlTypes;
-using Microsoft.Data.SqlClient;
+// // See https://aka.ms/new-console-template for more information
+// // using System.Data;
+// // using System.Data.Common;
+// // using System.Data.SqlTypes;
+// // using Microsoft.Data.SqlClient;
 
-Console.WriteLine("Hello, World!");
+// // Console.WriteLine("Hello, World!");
 
-SqlConnectionStringBuilder sb = new SqlConnectionStringBuilder();
-sb.DataSource="localhost,1433";//local or sever name
-sb.InitialCatalog="SecC_db";//Database name
-sb.UserID="sa";
-sb.Password="sasa@123";
-sb.TrustServerCertificate=true;
+// // SqlConnectionStringBuilder sb = new SqlConnectionStringBuilder();
+// // sb.DataSource="localhost,1433";//local or sever name
+// // sb.InitialCatalog="SecC_db";//Database name
+// // sb.UserID="sa";
+// // sb.Password="sasa@123";
+// // sb.TrustServerCertificate=true;
 
-Console.WriteLine($"The Connection is {sb.ConnectionString}");
+// // Console.WriteLine($"The Connection is {sb.ConnectionString}");
 
-SqlConnection connection = new SqlConnection(sb.ConnectionString);
+// // SqlConnection connection = new SqlConnection(sb.ConnectionString);
 
-Console.WriteLine("The Connection is opening");
-connection.Open();
-Console.WriteLine("The Connection is opened");
+// // Console.WriteLine("The Connection is opening");
+// // connection.Open();
+// // Console.WriteLine("The Connection is opened");
 
-// SqlCommand cmd = new SqlCommand(@"select [STUDENT_ID],
-// [STUDENT_NAME],
-// [FATHER_NAME],
-// [ENROLL_DATE],
-// [city]
-// from data_UIT",connection);if u want more clear version build query
-string query = @"select [STUDENT_ID],
-[STUDENT_NAME],
-[FATHER_NAME],
-[ENROLL_DATE],
-[city]
-from data_UIT";
+// // // SqlCommand cmd = new SqlCommand(@"select [STUDENT_ID],
+// // // [STUDENT_NAME],
+// // // [FATHER_NAME],
+// // // [ENROLL_DATE],
+// // // [city]
+// // // from data_UIT",connection);if u want more clear version build query
+// // string query = @"select [STUDENT_ID],
+// // [STUDENT_NAME],
+// // [FATHER_NAME],
+// // [ENROLL_DATE],
+// // [city]
+// // from data_UIT";
 
-SqlCommand cmd = new SqlCommand(query,connection);
-//to carry this command we need adapter 
-SqlDataAdapter adp = new SqlDataAdapter(cmd);
-//to execute data we need table 
-DataTable tb = new DataTable();
-//now we need to fill the data so 
-adp.Fill(tb);
+// // SqlCommand cmd = new SqlCommand(query,connection);
+// // //to carry this command we need adapter 
+// // SqlDataAdapter adp = new SqlDataAdapter(cmd);
+// // //to execute data we need table 
+// // DataTable tb = new DataTable();
+// // //now we need to fill the data so 
+// // adp.Fill(tb);
 
-Console.WriteLine("The Connection is closing");
-connection.Close();
-Console.WriteLine("The Connection is closed");
+// // Console.WriteLine("The Connection is closing");
+// // connection.Close();
+// // Console.WriteLine("The Connection is closed");
 
-foreach(DataRow item in tb.Rows)
-{
-    Console.WriteLine(item["STUDENT_ID"]);
-    Console.WriteLine(item["STUDENT_NAME"]);
-    Console.WriteLine(item["FATHER_NAME"]);
-    DateTime dt= Convert.ToDateTime(  item["ENROLL_DATE"]);
-    Console.WriteLine(dt.ToString("dd-MMM-yyyy"));
-}
+// // foreach(DataRow item in tb.Rows)
+// // {
+// //     Console.WriteLine(item["STUDENT_ID"]);
+// //     Console.WriteLine(item["STUDENT_NAME"]);
+// //     Console.WriteLine(item["FATHER_NAME"]);
+// //     DateTime dt= Convert.ToDateTime(  item["ENROLL_DATE"]);
+// //     Console.WriteLine(dt.ToString("dd-MMM-yyyy"));
+// // }
 
-Console.ReadLine();
+// // Console.ReadLine();
+
+// // Shift command p to creat enew project and select console app 
+// // and then select framework and then give name to your project 
+// // and then click on create button
+
+// // In **VS Code**, the standard **Class Library** template isn't listed under a special EF Core menu. To create a Class Library for your EF Core Data-First models, follow these steps:
+
+// // ---
+
+// // ### Step 1: Create a Class Library
+
+// // 1. Open the VS Code Command Palette (`Cmd + Shift + P` on macOS or `Ctrl + Shift + P` on Windows/Linux).
+// // 2. Type **`.NET: New Project...`** and hit Enter.
+// // 3. Select **Class Library** from the dropdown menu list.
+// // 4. Name your project (e.g., `DataAccess` or `MyProject.Data`) and choose the target directory.
+
+// // *Alternatively, run this in your VS Code terminal:*
+
+// // ```bash
+// // dotnet new classlib -o DataAccess
+
+// // ```
+
+// // ---
+
+// // ### Step 2: Install EF Core Packages
+
+// // Navigate to your Class Library directory in the terminal and install the required packages for Database-First scaffolding:
+
+// // ```bash
+// // cd DataAccess
+
+// // # 1. Main EF Core library
+// // dotnet add package Microsoft.EntityFrameworkCore
+
+// // # 2. Provider for your database (e.g., SQL Server, PostgreSQL, MySQL, SQLite)
+// // dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+
+// // # 3. Tools required for Database-First scaffolding
+// // dotnet add package Microsoft.EntityFrameworkCore.Design
+// // dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+// // ```
+
+// // *(Replace `Microsoft.EntityFrameworkCore.SqlServer` with `Npgsql.EntityFrameworkCore.PostgreSQL` or `Pomelo.EntityFrameworkCore.MySql` depending on your database engine).*
+
+// // ---
+
+// // ### Step 3: Generate Models (Data-First / Scaffolding)
+
+// // Ensure the **`dotnet-ef`** tool is installed globally on your machine:
+
+// // ```bash
+// // dotnet tool install --global dotnet-ef
+
+// // ```
+
+// // Then run the scaffold command directly in your Class Library folder to generate model entities and the `DbContext` from your existing database:
+
+// // ```bash
+// // dotnet ef dbcontext scaffold "Server=YOUR_SERVER;Database=YOUR_DB;User Id=YOUR_USER;Password=YOUR_PASSWORD;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models
+
+// // ```
+
+// // ---
+
+// // ### Step 4: Link to Your Main Application
+
+// // If you have a primary Web API or App project in the same workspace, add a reference from your main project to this Class Library:
+
+// // ```bash
+// // dotnet add path/to/YourMainApp.csproj reference DataAccess/DataAccess.csproj
+
+// // ```
+// // dotnet ef dbcontext scaffold "Server=localhost,1433;Database=staff;User Id=sa;Password=sasa@123;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -c AppDbContext -f 
+// //class library is created and then we can add reference to our main project and then we can use the models in our main project.
+
+// //one end point one request and one response model
+
+//   protected override void OnModelCreating(ModelBuilder modelBuilder)
+//     {
+//         modelBuilder.Entity<Staff>(entity =>
+//         {
+//             entity.HasKey(e => e.StaffId).HasName("PK__Staff__96D4AB17FF2B73FE");
+
+//             entity.Property(e => e.Name)
+//                 .HasMaxLength(100)
+//                 .IsUnicode(false);
+//         });
+
+//         OnModelCreatingPartial(modelBuilder);
+//     }
+Database(EF core database first )
+Domain (business logic and data access)
+API

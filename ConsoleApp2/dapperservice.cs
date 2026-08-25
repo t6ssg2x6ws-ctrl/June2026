@@ -46,11 +46,11 @@ namespace ConsoleApp2
                     ENROLL_DATE,
                     city)
                     values
-                    ('TNT - 0000',
-                    'Insert Person',
-                    'TeeSayar',
-                    '2026-6-18',
-                    'ThawThar')"
+                    ('TNT - 2608',
+                    'L Sun Jar Nue',
+                    'U Yaw Sat',
+                    '2007-03-25',
+                    'Naypyitaw')"
                 );
                 Console.WriteLine($"The insert data is on Line {result}");
                 
