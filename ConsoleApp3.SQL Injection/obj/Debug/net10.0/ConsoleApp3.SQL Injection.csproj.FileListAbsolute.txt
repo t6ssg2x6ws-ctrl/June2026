@@ -63,4 +63,4 @@
 /Users/taki/June2026/ConsoleApp3.SQL Injection/bin/Debug/net10.0/ConsoleApp3.SQL Injection.staticwebassets.runtime.json
 /Users/taki/June2026/ConsoleApp3.SQL Injection/obj/Debug/net10.0/compressed/n4det76lf9-{0}-zgxn30z95t-zgxn30z95t.gz
 /Users/taki/June2026/ConsoleApp3.SQL Injection/obj/Debug/net10.0/compressed/brat91229d-{0}-i7bottuas9-i7bottuas9.gz
-/Users/taki/June2026/ConsoleApp3.SQL Injection/obj/Debug/net10.0/compressed/4htmhrziuy-{0}-8kl8q8i24p-8kl8q8i24p.gz
+/Users/taki/June2026/ConsoleApp3.SQL Injection/obj/Debug/net10.0/compressed/4htmhrziuy-{0}-lc6umpx3to-lc6umpx3to.gz

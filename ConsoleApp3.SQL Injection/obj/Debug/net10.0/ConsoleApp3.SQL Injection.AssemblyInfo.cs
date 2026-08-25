@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsoleApp3.SQL Injection")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ca7b1a734d13464f3b9b2dcda7f12fff63bdc21")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7dd3673d4e659903def39b63c1704424f2ba08a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsoleApp3.SQL Injection")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsoleApp3.SQL Injection")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
