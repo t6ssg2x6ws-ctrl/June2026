@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UIT Student Portal & Database Management | login_db</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>UIT Portal</h2>
+                    <span class="badge db-badge"><i class="fa-solid fa-database"></i> login_db</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#dashboard" class="nav-item active" id="nav-dashboard" onclick="switchTab('dashboard')">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#students" class="nav-item" id="nav-students" onclick="switchTab('students')">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>data_UIT Table</span>
+                </a>
+                <a href="#security" class="nav-item" id="nav-security" onclick="switchTab('security')">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>SQL Security</span>
+                </a>
+                <a href="#db-schema" class="nav-item" id="nav-db-schema" onclick="switchTab('db-schema')">
+                    <i class="fa-solid fa-server"></i>
+                    <span>Db Config & SQL</span>
+                </a>
+            </nav>
+
+            <div class="user-status-card" id="user-status-card">
+                <div class="user-avatar" id="user-avatar-icon">
+                    <i class="fa-solid fa-user-lock"></i>
+                </div>
+                <div class="user-info">
+                    <span class="user-label">Status</span>
+                    <strong id="user-display-name">Guest (Not Logged In)</strong>
+                </div>
+                <button class="btn btn-sm btn-outline-light" id="auth-action-btn" onclick="toggleAuthModal()">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <h1 id="page-title">UIT Student Management Dashboard</h1>
+                    <p class="subtitle" id="page-subtitle">Strictly powered by `login_db` schema in dapperservice.cs</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="exportSqlScript()">
+                        <i class="fa-solid fa-file-code"></i> Export DDL & Data
+                    </button>
+                    <button class="btn btn-primary" onclick="openAddStudentModal()">
+                        <i class="fa-solid fa-user-plus"></i> New Student
+                    </button>
+                </div>
+            </header>
+
+            <!-- TAB 1: DASHBOARD -->
+            <section id="tab-dashboard" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-purple">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Total Students</h3>
+                            <div class="stat-value" id="stat-total-students">0</div>
+                            <span class="stat-trend"><i class="fa-solid fa-table"></i> [dbo].[data_UIT]</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-teal">
+                            <i class="fa-solid fa-city"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Cities Covered</h3>
+                            <div class="stat-value" id="stat-cities-count">0</div>
+                            <span class="stat-trend"><i class="fa-solid fa-location-dot"></i> Student origins</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-emerald">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Users in login_db</h3>
+                            <div class="stat-value" id="stat-users-count">2</div>
+                            <span class="stat-trend"><i class="fa-solid fa-lock"></i> [dbo].[users]</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-amber">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>SQL Server Target</h3>
+                            <div class="stat-value text-mono">localhost,1433</div>
+                            <span class="stat-trend"><i class="fa-solid fa-plug"></i> sa@sasa@123</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-widgets-grid">
+                    <!-- Recent Students Widget -->
+                    <div class="widget-card flex-2">
+                        <div class="widget-header">
+                            <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Student Enrollments</h3>
+                            <button class="btn btn-sm btn-link" onclick="switchTab('students')">View All</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>STUDENT_ID</th>
+                                        <th>STUDENT_NAME</th>
+                                        <th>FATHER_NAME</th>
+                                        <th>ENROLL_DATE</th>
+                                        <th>CITY</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-students-tbody">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Connection Quick Status -->
+                    <div class="widget-card flex-1">
+                        <div class="widget-header">
+                            <h3><i class="fa-solid fa-circle-nodes"></i> DB Spec & Credentials</h3>
+                        </div>
+                        <div class="db-spec-list">
+                            <div class="spec-item">
+                                <span class="spec-label">DataSource:</span>
+                                <span class="spec-val">localhost,1433</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">InitialCatalog:</span>
+                                <span class="spec-val">login_db</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">UserID:</span>
+                                <span class="spec-val">sa</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">TrustServerCert:</span>
+                                <span class="spec-val highlight-green">true</span>
+                            </div>
+                        </div>
+                        <div class="security-banner">
+                            <i class="fa-solid fa-shield-check text-green"></i>
+                            <div class="banner-text">
+                                <strong>Dapper Parameterized Queries</strong>
+                                <p>Prevents SQL Injection attacks using @username & @password_hash</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: STUDENTS DATA_UIT TABLE -->
+            <section id="tab-students" class="tab-content">
+                <div class="table-controls-bar">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="search-input" placeholder="Search by ID, Student Name, Father, City..." oninput="handleSearch()">
+                    </div>
+                    <div class="filter-group">
+                        <select id="city-filter" onchange="handleFilter()">
+                            <option value="">All Cities</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-card glass-panel">
+                    <div class="table-responsive">
+                        <table class="custom-table full-table">
+                            <thead>
+                                <tr>
+                                    <th>STUDENT_ID</th>
+                                    <th>STUDENT_NAME</th>
+                                    <th>FATHER_NAME</th>
+                                    <th>ENROLL_DATE</th>
+                                    <th>CITY</th>
+                                    <th>AGE</th>
+                                    <th>MOTHER_NAME</th>
+                                    <th class="text-right">ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-table-body">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <span id="showing-count">Showing 0 entries</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: SQL SECURITY DEMO -->
+            <section id="tab-security" class="tab-content">
+                <div class="widget-card">
+                    <div class="widget-header">
+                        <h3><i class="fa-solid fa-shield-cat"></i> SQL Injection Protection Analysis</h3>
+                    </div>
+                    <p class="section-desc">
+                        As implemented in <code class="code-tag">dapperservice.cs</code>, parameterized queries with Dapper eliminate SQL injection vulnerabilities by separating executable SQL code from user-supplied data parameters.
+                    </p>
+
+                    <div class="query-comparison-grid">
+                        <div class="query-card unsafe">
+                            <div class="query-card-header">
+                                <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Vulnerable String Interpolation</span>
+                            </div>
+                            <pre><code class="language-sql">// UNSAFE (Commented out in dapperservice.cs):
+$"select * from [dbo].[users] where username='{nae}' and password_hash='{psw}';"</code></pre>
+                            <p class="risk-note">
+                                <strong>Vulnerability Risk:</strong> Passing input like <code class="code-tag">' OR '1'='1</code> allows unauthorized authentication bypass.
+                            </p>
+                        </div>
+
+                        <div class="query-card safe">
+                            <div class="query-card-header">
+                                <span class="badge badge-success"><i class="fa-solid fa-lock"></i> Safe Parameterized Query (Active)</span>
+                            </div>
+                            <pre><code class="language-sql">// SAFE (Active implementation in dapperservice.cs):
+"select * from [dbo].[users] where username=@username and password_hash=@password_hash",
+new { username = nae, password_hash = psw }</code></pre>
+                            <p class="risk-note">
+                                <strong>Protection:</strong> SQL Server handles <code class="code-tag">@username</code> and <code class="code-tag">@password_hash</code> strictly as literal string parameters, disabling malicious syntax execution.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive SQL Injection Tester -->
+                    <div class="interactive-tester">
+                        <h4><i class="fa-solid fa-flask"></i> Interactive Security Playground</h4>
+                        <div class="tester-form">
+                            <div class="form-group">
+                                <label for="test-username">Test Username Input:</label>
+                                <input type="text" id="test-username" value="admin' OR '1'='1" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="test-password">Test Password Input:</label>
+                                <input type="text" id="test-password" value="anything' --" class="form-control">
+                            </div>
+                            <button class="btn btn-primary" onclick="runSqlTest()">
+                                <i class="fa-solid fa-play"></i> Simulate Query Execution
+                            </button>
+                        </div>
+
+                        <div class="test-results-box" id="test-results-box">
+                            <div class="test-result-item">
+                                <strong>Vulnerable Query Result:</strong>
+                                <span id="vulnerable-result" class="text-danger">Click simulate to test</span>
+                            </div>
+                            <div class="test-result-item">
+                                <strong>Parameterized Query Result:</strong>
+                                <span id="parameterized-result" class="text-success">Click simulate to test</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: DB SCHEMA & CONFIG -->
+            <section id="tab-db-schema" class="tab-content">
+                <div class="widget-card">
+                    <div class="widget-header">
+                        <h3><i class="fa-solid fa-code"></i> T-SQL Database Definition (dapperservice.cs)</h3>
+                        <button class="btn btn-sm btn-outline-light" onclick="copySqlScript()">
+                            <i class="fa-solid fa-copy"></i> Copy Script
+                        </button>
+                    </div>
+                    <pre class="sql-code-block"><code id="sql-script-display">-- T-SQL Schema definition derived strictly from dapperservice.cs
+CREATE DATABASE [login_db];
+GO
+
+USE [login_db];
+GO
+
+-- Table 1: users (Authentication Service)
+CREATE TABLE [dbo].[users] (
+    [username] NVARCHAR(100) NOT NULL PRIMARY KEY,
+    [password_hash] NVARCHAR(255) NOT NULL
+);
+GO
+
+-- Table 2: data_UIT (Student Information)
+CREATE TABLE [dbo].[data_UIT] (
+    [STUDENT_ID] VARCHAR(50) NOT NULL PRIMARY KEY,
+    [STUDENT_NAME] NVARCHAR(100) NOT NULL,
+    [FATHER_NAME] NVARCHAR(100) NOT NULL,
+    [ENROLL_DATE] DATETIME NOT NULL,
+    [city] NVARCHAR(100) NOT NULL,
+    [age] NVARCHAR(10) NOT NULL,
+    [Mother_Name] NVARCHAR(100) NOT NULL
+);
+GO
+
+-- Initial Sample Data matching C# Dapper execution code:
+INSERT INTO [dbo].[users] ([username], [password_hash]) VALUES 
+('admin', 'admin123'),
+('user1', 'pass123');
+
+INSERT INTO [dbo].[data_UIT] ([STUDENT_ID], [STUDENT_NAME], [FATHER_NAME], [ENROLL_DATE], [city], [age], [Mother_Name]) VALUES 
+('TNT-2608', 'L Sun Jar Nue', 'U Yaw Sat', '2007-03-25', 'Naypyitaw', '21', 'Daw Hla'),
+('TNT-0201', 'Phoe La Min', 'U Myint', '2024-01-15', 'Yangon', '20', 'Daw Hla'),
+('TNT-0204', 'Aung Aung', 'U Kyaw', '2023-09-10', 'Mandalay', '19', 'Daw Aye'),
+('TNT-2534', 'Su Su', 'U Win', '2022-11-05', 'Taunggyi', '22', 'Daw Mya');
+GO</code></pre>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL: LOGIN / AUTH -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-right-to-bracket"></i> Login Service (`[dbo].[users]`)</h3>
+                <button class="close-btn" onclick="closeAuthModal()">&times;</button>
+            </div>
+            <form id="auth-form" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label for="login-username"><i class="fa-solid fa-user"></i> Username:</label>
+                    <input type="text" id="login-username" class="form-control" required placeholder="e.g. admin">
+                </div>
+                <div class="form-group">
+                    <label for="login-password"><i class="fa-solid fa-key"></i> Password:</label>
+                    <input type="password" id="login-password" class="form-control" required placeholder="e.g. admin123">
+                </div>
+                <div class="sql-query-preview">
+                    <span class="label">Executed Dapper Query:</span>
+                    <code>select * from [dbo].[users] where username=@username and password_hash=@password_hash</code>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAuthModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-lock-open"></i> Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD / EDIT STUDENT -->
+    <div class="modal-overlay" id="student-modal">
+        <div class="modal-content glass-card wide-modal">
+            <div class="modal-header">
+                <h3 id="student-modal-title"><i class="fa-solid fa-user-plus"></i> New Student (`[dbo].[data_UIT]`)</h3>
+                <button class="close-btn" onclick="closeStudentModal()">&times;</button>
+            </div>
+            <form id="student-form" onsubmit="handleStudentFormSubmit(event)">
+                <input type="hidden" id="student-mode" value="create">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="field-student-id">STUDENT_ID <span class="required">*</span></label>
+                        <input type="text" id="field-student-id" class="form-control text-mono" required placeholder="e.g. TNT-2608">
+                    </div>
+                    <div class="form-group">
+                        <label for="field-student-name">STUDENT_NAME <span class="required">*</span></label>
+                        <input type="text" id="field-student-name" class="form-control" required placeholder="e.g. L Sun Jar Nue">
+                    </div>
+                    <div class="form-group">
+                        <label for="field-father-name">FATHER_NAME <span class="required">*</span></label>
+                        <input type="text" id="field-father-name" class="form-control" required placeholder="e.g. U Yaw Sat">
+                    </div>
+                    <div class="form-group">
+                        <label for="field-enroll-date">ENROLL_DATE <span class="required">*</span></label>
+                        <input type="date" id="field-enroll-date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="field-city">city <span class="required">*</span></label>
+                        <input type="text" id="field-city" class="form-control" required placeholder="e.g. Naypyitaw">
+                    </div>
+                    <div class="form-group">
+                        <label for="field-age">age <span class="required">*</span></label>
+                        <input type="number" id="field-age" class="form-control" required placeholder="e.g. 21">
+                    </div>
+                    <div class="form-group span-2">
+                        <label for="field-mother-name">Mother_Name <span class="required">*</span></label>
+                        <input type="text" id="field-mother-name" class="form-control" required placeholder="e.g. Daw Hla">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeStudentModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="student-submit-btn">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Student Record
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
