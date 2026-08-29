@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="mb-3">
+        <label for="carNo" class="form-label">Car No</label>
+        <input type="text" class="form-control" id="carNo" name="carNo">
+    </div>
+
+    <div class="mb-3">
+        <label for="petroleum" class="form-label">Petroleum</label>
+        <input type="text" class="form-control" id="petroleum" name="petroleum">
+    </div>
+
+    <div class="mb-3">
+        <label for="shopName" class="form-label">Shop Name</label>
+        <input type="text" class="form-control" id="shopName" name="shopName">
+    </div>
+
+    <div class="mb-3">
+        <label for="region" class="form-label">Region</label>
+        <input type="text" class="form-control" id="region" name="region">
+    </div>
+
+    <div class="mb-3">
+        <label for="license" class="form-label">License</label>
+        <input type="text" class="form-control" id="license" name="license">
+    </div>
+    <button type="button" class="btn btn-success" id="Success">Success</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">No</th>
+                <th scope="col">Car Number</th>
+                <th scope="col">Petroleum</th>
+                <th scope="col">Shop Name</th>
+                <th scope="col">Region</th>
+                <th scope="col">License</th>
+            </tr>
+        </thead>
+        <tbody id="TableData">
+            <!-- <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>John</td>
+                <td>Doe</td>
+                <td>@social</td>
+            </tr> -->
+        </tbody>
+    </table>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
+        </script>
+    <script src="js/jquery-4.0.0.min.js"></script>
+    <script>
+        let _editID = null;
+        $('#Success').click(function () {
+            // let Car_Number = $('#carNo').val();
+            // let Petroleum = $('#petroleum').val();
+            // let Shop_Name = $('#shopName').val();
+            // let Region = $('#region').val();
+            // let License = $('#license').val();
+            // localStorage.setItem('CarNo', Car_Number);
+            // localStorage.setItem('Petroleum', Petroleum);
+            // localStorage.setItem('Shop', Shop_Name);
+            // localStorage.setItem('Region', Region);
+            // localStorage.setItem('license', License);
+            if (_editID == null) {
+                Savedata();
+            } else {
+                Updatedata();
+                _editID = null;
+            }
+        }
+        )
+        function Savedata() {
+            let Car_Number = $('#carNo').val();
+            let Petroleum = $('#petroleum').val();
+            let Shop_Name = $('#shopName').val();
+            let Region = $('#region').val();
+            let License = $('#license').val();
+
+            let dataput = {
+                id: crypto.randomUUID(),
+                CarNO: Car_Number,
+                Petrol: Petroleum,
+                shop: Shop_Name,
+                region: Region,
+                license: license
+            };
+            dataputs = [];
+            let jsoncon = localStorage.getItem("dataputs");
+            if (jsoncon != null) {
+                dataputs = JSON.parse(jsoncon);
+            }
+            dataputs.push(dataput);
+            let jscon = JSON.stringify(dataputs);
+            localStorage.setItem("dataputs", jscon);
+
+            loaddata();
+        }
+        function Updatedata(){
+           
+            let _CarNO =  $('#carNo').val();
+           let _Petrol = $('#petroleum').val();
+           let _Shop = $('#shopName').val();
+           let _Region = $('#region').val();
+           let _License = $('#license').val();
+
+           let get_data = localStorage.getItem("dataputs");
+           
+           let dataputs = [];
+           if ( get_data != null ){
+              dataputs = JSON.parse(get_data);
+           }
+
+           let index = dataputs.findIndex(x=>x.id == _editID);
+           if (index == -1){
+            alert("No Data Found!");
+            return ;
+           }
+           
+           dataputs[index].CarNO =_CarNO;
+           dataputs[index].Petrol =_Petrol;
+           dataputs[index].shop = _Shop;
+           dataputs[index].region = _Region;
+           dataputs[index].license =_License;
+
+           let JsonCon = JSON.stringify(dataputs);
+           localStorage.setItem("dataputs",JsonCon);
+
+           loaddata();
+        }
+        function loaddata() {
+            $('#TableData').html(' ');
+            let dataputs = [];
+            let get_data = localStorage.getItem("dataputs");
+
+            if (dataputs != null) {
+                dataputs = JSON.parse(get_data);
+            }
+            for (let i = 0; i < dataputs.length; i++) {
+                const dataput = dataputs[i];
+                let TbRow = `
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-primary" href="#" role="button" onclick = "EditData('${dataput.id}')">Edit</a>
+                                        <button class="btn btn-primary" type="submit" onclick = "Delete('${dataput.id}')" >Delete</button>
+                                    </td>
+                                     <th scope="row">${i + 1}</th>
+                                         <td>${dataput.id}</td>
+                                         <td>${dataput.CarNO}</td>
+                                         <td>${dataput.Petrol} </td>
+                                         <td>${dataput.shop} </td>
+                                         <td>${dataput.region} </td>
+                                         <td>${dataput.license} </td>
+                                </tr>
+                            `;
+                $('#TableData').append(TbRow);
+            }
+        }
+
+        function EditData(id){
+            let get_Data = localStorage.getItem("dataputs");
+            let dataputs = [];
+            if (get_Data!= null){
+                dataputs = JSON.parse(get_Data);
+            }
+            let filter = dataputs.filter(x=> x.id == id  );
+            if(filter.length == 0 ){
+                return ;
+            }
+            let dataput  = filter[0];
+            $('#carNo').val(dataput.CarNO);
+            $('#petroleum').val(dataput.Petrol);
+            $('#shopName').val(dataput.shop);
+            $('#region').val(dataput.region);
+            $('#license').val(dataput.license);
+
+            _editID = id;
+        }
+
+        function Delete(id){
+
+            let get_data = localStorage.getItem("dataputs");
+            let dataputs = [];
+
+            if(get_data != null){
+                dataputs = JSON.parse(get_data);
+            }
+
+            let index = dataputs.findIndex(x=>x.id == id)
+            if(index == -1){
+                return;
+            }
+
+            let exxludenum = dataputs.filter(x=> x.id != id);
+            
+            let _jsonstr = JSON.stringify(exxludenum);
+            localStorage.setItem("dataputs",_jsonstr);
+
+            loaddata();
+        }
+    </script>
+
+</body>
+
+</html>
